@@ -1,16 +1,24 @@
 {
-    "BundleType": "Application",
     "AppIcon": {
-        "36x18": "tutorial.png"
+        "18x18": "flickr_18.png",
+        "64x64": "flickr_64.png",
+        "128x128": "flickr_128.png"
+    },
+    "AppDescription": {
+        "en": "Fetches a continuous stream of pictures from flickr based on the currently playing artist."
     },
     "AppName": {
         "en": "flickrstream"
     },
-    "SupportedLanguages": [
-        "en"
-    ],
+    "BundleIdentifier": "flickrstream",
+    "BundleType": "Application",
+    "RequiredInterface": 1,
     "RequiredPermissions": [
         "http://api.flickr.com",
         "http://*.staticflickr.com"
-    ]
+    ],
+    "SupportedLanguages": [
+        "en"
+    ],
+    "VendorIdentifier": "com.thelonelycoder"
 }
