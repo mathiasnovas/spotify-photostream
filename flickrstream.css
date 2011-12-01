@@ -1,5 +1,32 @@
-#splash {
-	font-size: 3em;
-	line-height: 1.75em;
+body {
+	background: url('black_denim.png');
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+#image {
+	position: absolute;
 	text-align: center;
+	top: 15%;
+	width: 100%;
+}
+
+#image img {
+	border: 0.5em solid #fff;
+	box-shadow: 0 10px 50px #000;
+}
+
+#splash {
+	color: #444;
+	font-size: 7em;
+	line-height: 1em;
+	font-weight: bold;
+	opacity: 0.5;
+	position: absolute;
+	text-align: center;
+	text-transform: uppercase;
+	text-shadow: -1px -1px 0px #222, 1px 1px 0px #666;
+	top:30%;
+	width: 100%;
 }
