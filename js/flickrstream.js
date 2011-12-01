@@ -73,7 +73,7 @@
 		search: function(callback) {
 			var self = this;
 
-			if (!this.searchTerm) {
+			if (!this.options.searchTerm) {
 				console.error('FlickrStream::search: no search term defined');
 				if (callback)
 					callback();
@@ -134,7 +134,7 @@
 		 * @param searchTerm The search term
 		 **/
 		setSearchTerm: function (searchTerm) {
-			this.searchTerm = searchTerm;
+			this.options.searchTerm = searchTerm;
 			this.resetStream();
 		}
 
