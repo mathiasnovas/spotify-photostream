@@ -1,0 +1,1 @@
+Small Spotify app which fetches a continuous stream of images from flickr.
