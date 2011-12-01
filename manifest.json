@@ -10,6 +10,7 @@
         "en"
     ],
     "RequiredPermissions": [
-        "http://api.flickr.com"
+        "http://api.flickr.com",
+        "http://*.staticflickr.com"
     ]
 }
