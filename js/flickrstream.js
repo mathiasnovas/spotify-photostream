@@ -100,6 +100,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 					method: 'flickr.photos.search',
 					text: this.options.searchTerm,
 					per_page: this.options.perPage,
+					page: this.page,
 					sort: 'relevance'
 				},
 				crossDomain: true,
