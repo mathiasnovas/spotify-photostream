@@ -38,12 +38,14 @@ $(function() {
 
 // Start the playback
 function play() {
-	imageStream = setInterval('nextImage()', intervalLength);
+	if (imageStream === null)
+		imageStream = setInterval('nextImage()', intervalLength);
 }
 
 // Pause the playback
 function pause() {
-	clearInterval(imageStream);
+	if (imageStream !== null)
+		clearInterval(imageStream);
 	imageStream = null;
 }
 
@@ -62,7 +64,7 @@ function update() {
 	} else if (playerTrackInfo.track.artists[0].name != currentArtist) {
 		currentArtist = playerTrackInfo.track.artists[0].name;
 		flickr.setSearchTerm(currentArtist);
-		if (!imageStream) {
+		if (!imageStream && sp.trackPlayer.getIsPlaying()) {
 			nextImage();
 			play();
 		}
