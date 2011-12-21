@@ -77,5 +77,6 @@ function nextImage() {
 	flickr.next(function(image) {
 		currentImage = image.url.default;
 		$('#image').html('<img src="' + currentImage + '" alt="' + currentArtist + '">');
+		$('#link').html('<a href="' + image.link + '">' + image.title + '</a>');
 	});
 }

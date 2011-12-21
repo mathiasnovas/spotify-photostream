@@ -121,6 +121,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 							id: entry.id,
 							title: entry.title,
 							owner: entry.owner,
+							link: 'http://www.flickr.com/photos/' + entry.owner + '/' + entry.id,
 							url: {
 								'default': 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '.jpg',
 								thumbnail: 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '_t.jpg',
