@@ -25,10 +25,27 @@ $(function() {
 		if (event.data.curtrack == true) {
 			// Track has changed
 			update();
+		} else if (event.data.playstate == true) {
+			// Playstate has changed
+			if (sp.trackPlayer.getIsPlaying())
+				play();
+			else
+				pause();
 		}
 	});
 
 });
+
+// Start the playback
+function play() {
+	imageStream = setInterval('nextImage()', intervalLength);
+}
+
+// Pause the playback
+function pause() {
+	clearInterval(imageStream);
+	imageStream = null;
+}
 
 // Update the stream
 function update() {
@@ -37,10 +54,9 @@ function update() {
 	var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack();
 
 	if (playerTrackInfo == null) {
-		clearInterval(imageStream);
+		pause();
 		currentArtist = null;
 		currentImage = null;
-		imageStream = null;
 		$('#splash').show();
 		$('#image').hide();
 	} else if (playerTrackInfo.track.artists[0].name != currentArtist) {
@@ -48,7 +64,7 @@ function update() {
 		flickr.setSearchTerm(currentArtist);
 		if (!imageStream) {
 			nextImage();
-			imageStream = setInterval('nextImage()', intervalLength);
+			play();
 		}
 		$('#splash').hide();
 		$('#image').show();
@@ -60,7 +76,6 @@ function update() {
 function nextImage() {
 	flickr.next(function(image) {
 		currentImage = image.url.default;
-		console.log(currentImage);
 		$('#image').html('<img src="' + currentImage + '" alt="' + currentArtist + '">');
 	});
 }
