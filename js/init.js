@@ -77,8 +77,29 @@ function update() {
 // Go to thext next image
 function nextImage() {
 	flickr.next(function(image) {
+		var img = new Image();
+
+		// Load new image
 		currentImage = image.url.default;
-		$('#image').html('<img src="' + currentImage + '" alt="' + currentArtist + '">');
-		$('#link').html('<a href="' + image.link + '">' + image.title + '</a>');
+		$(img)
+			.load(function () {
+
+				// Remove existing images
+				$('#image > div').remove();
+
+				// Add our image
+				$('#image').append('<div id="' + image.id + '"><img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a></div>');
+				
+				// Position and show image
+				var imagediv = $('#image');
+				var innerdiv = $('#image #' + image.id);
+				innerdiv
+					.css('top', ((imagediv.height() - innerdiv.height()) / 2) + 'px')
+					.show();
+			})
+			.error(function () {
+      			console.error("Unable to load image");
+    		})
+    		.attr('src', currentImage);
 	});
 }

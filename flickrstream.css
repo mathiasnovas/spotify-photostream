@@ -5,9 +5,23 @@ body {
 	width: 100%;
 }
 
+#image {
+	position: absolute;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+#image > div {
+	display: none;
+	position: relative;
+}
+
 #image img {
 	border: 0.5em solid #fff;
 	box-shadow: 0 10px 50px #000;
+	display: block;
+	margin: 0 auto 0.5em;
 }
 
 #link a {
@@ -25,12 +39,5 @@ body {
 	text-transform: uppercase;
 	text-shadow: -1px -1px 0px #222, 1px 1px 0px #666;
 	top:30%;
-	width: 100%;
-}
-
-#wrapper {
-	position: absolute;
-	text-align: center;
-	top: 15%;
 	width: 100%;
 }
