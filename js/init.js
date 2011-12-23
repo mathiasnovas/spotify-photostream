@@ -87,7 +87,9 @@ function nextImage() {
 			.load(function () {
 
 				// Remove existing images
-				$('#image > div').remove();
+				$('#image > div').fadeToggle('slow', 'swing', function() {
+					$(this).remove();
+				});
 
 				// Add our image
 				$('#image').append('<div id="' + image.id + '"><img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a></div>');
@@ -97,7 +99,7 @@ function nextImage() {
 				var innerdiv = $('#image #' + image.id);
 				innerdiv
 					.css('top', ((imagediv.height() - innerdiv.height()) / 2) + 'px')
-					.show();
+					.fadeToggle('slow');
 				
 				// Prepare next image
 				if (playing)
