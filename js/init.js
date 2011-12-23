@@ -10,6 +10,7 @@ flickr = new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'); // p
 
 // Settings
 intervalLength = 7000;
+playing = false;
 
 // Current objects
 var currentArtist = null;
@@ -38,15 +39,17 @@ $(function() {
 
 // Start the playback
 function play() {
-	if (imageStream === null)
-		imageStream = setInterval('nextImage()', intervalLength);
+	if (imageStream !== null)
+		clearTimeout(imageStream);
+	playing = true;
+	nextImage();
 }
 
 // Pause the playback
 function pause() {
 	if (imageStream !== null)
-		clearInterval(imageStream);
-	imageStream = null;
+		clearTimeout(imageStream);
+	playing = false;
 }
 
 // Update the stream
@@ -65,7 +68,6 @@ function update() {
 		currentArtist = playerTrackInfo.track.artists[0].name;
 		flickr.setSearchTerm(currentArtist);
 		if (!imageStream && sp.trackPlayer.getIsPlaying()) {
-			nextImage();
 			play();
 		}
 		$('#splash').hide();
@@ -96,6 +98,10 @@ function nextImage() {
 				innerdiv
 					.css('top', ((imagediv.height() - innerdiv.height()) / 2) + 'px')
 					.show();
+				
+				// Prepare next image
+				if (playing)
+					imageStream = setTimeout('nextImage()', intervalLength);
 			})
 			.error(function () {
       			console.error("Unable to load image");
