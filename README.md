@@ -7,7 +7,7 @@ Small Spotify app which fetches a continuous stream of images from flickr based 
 *Note: You must have your Spotify account enabled as a developer to use this application (see [the API resources](https://developer.spotify.com/en/spotify-apps-api/resources/) for more info)*
 
  1. Create a folder called "Spotify" in your home directory (if using Mac OSX) or in your My Documents folder (if using Windows)
- 2. Under that folder you create another one with the name of the app (in this case "flickrstream") and put all the code directly under that folder
+ 2. Clone (or unzip) the app into said folder and rename the folder to something easy to remember (I like just "flickrstream")
  3. Open up Spotify and in the search field enter **spotify:app:flickrstream** (substitute "flickrstream" with whatever you named the app folder)
 
 ## License
