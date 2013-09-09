@@ -1,8 +1,8 @@
 {
     "AppIcon": {
-        "18x18": "flickr_18.png",
-        "64x64": "flickr_64.png",
-        "128x128": "flickr_128.png"
+        "18x18": "img/flickr_18.png",
+        "64x64": "img/flickr_64.png",
+        "128x128": "img/flickr_128.png"
     },
     "AppDescription": {
         "en": "Fetches a continuous stream of pictures from flickr based on the currently playing artist."
