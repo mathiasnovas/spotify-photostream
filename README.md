@@ -2,6 +2,8 @@
 
 Small Spotify app which fetches a continuous stream of images from flickr based on the artist you're currently listening to.
 
+![Screenshot](https://raw.github.com/michaelenger/spotify-flickrstream/master/img/screenshot.png)
+
 ## Installation
 
 *Note: You must have your Spotify account enabled as a developer to use this application (see [the app documentation](https://developer.spotify.com/technologies/apps/) for more info)*
