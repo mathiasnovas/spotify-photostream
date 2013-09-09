@@ -2,20 +2,24 @@
 // init.js - Initializes the app
 //
 
-sp = getSpotifyApi(1);
+(function() {
+"use strict";
+
+// Spotify API
+var sp = getSpotifyApi(1),
 
 // Create a FlickrStream object
-flickrstream = sp.require('js/flickrstream');
-flickr = new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'); // please don't abuse my API key >_>
+	flickrstream = sp.require('js/flickrstream'),
+	flickr = new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'), // please don't abuse my API key >_>
 
 // Settings
-intervalLength = 7000;
-playing = false;
+	intervalLength = 7000,
+	playing = false,
 
 // Current objects
-var currentArtist = null;
-var currentImage = null;
-var imageStream = null;
+	currentArtist = null,
+	currentImage = null,
+	imageStream = null;
 
 // Onload
 $(function() {
@@ -93,17 +97,19 @@ function nextImage() {
 
 				// Add our image
 				$('#image').append('<div id="' + image.id + '"><img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a></div>');
-				
+
 				// Position and show image
 				var imagediv = $('#image');
 				var innerdiv = $('#image #' + image.id);
 				innerdiv
 					.css('top', ((imagediv.height() - innerdiv.height()) / 2) + 'px')
 					.fadeToggle('slow');
-				
+
 				// Prepare next image
 				if (playing)
-					imageStream = setTimeout('nextImage()', intervalLength);
+					imageStream = setTimeout(function() {
+						nextImage();
+					}, intervalLength);
 			})
 			.error(function () {
       			console.error("Unable to load image");
@@ -111,3 +117,5 @@ function nextImage() {
     		.attr('src', currentImage);
 	});
 }
+
+})();
