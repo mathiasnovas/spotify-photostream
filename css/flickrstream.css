@@ -42,3 +42,17 @@ body {
 	top:30%;
 	width: 100%;
 }
+
+.powered-by {
+	bottom: 10px;
+	font-size: 0.65em;
+	position: absolute;
+	opacity: 0.4;
+	right: 10px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+	.powered-by img {
+		display: block;
+	}
