@@ -14,118 +14,129 @@ Permission is granted to anyone to use this software for any purpose, including 
 **/
 
 (function() {
-"use strict";
+	"use strict";
 
-// Spotify API
-var sp = getSpotifyApi(1),
+	// Includes
+	var sp = getSpotifyApi(1),
+		flickrstream = sp.require('js/flickrstream');
 
-// Create a FlickrStream object
-	flickrstream = sp.require('js/flickrstream'),
-	flickr = new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'), // please don't abuse my API key >_>
+	// The app itself
+	var app = {
 
-// Settings
-	intervalLength = 7000,
-	playing = false,
+		// FlickrStream
+		flickr: new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'), // please don't abuse my API key >_>
 
-// Current objects
-	currentArtist = null,
-	currentImage = null,
-	imageStream = null;
+		// Settings
+		intervalLength: 7000,
+		playing: false,
 
-// Onload
-window.onload = function() {
-	update();
+		// Current objects
+		currentArtist: null,
+		currentImage: null,
+		imageStream: null,
 
-	// Catch player changed events
-	sp.trackPlayer.addEventListener("playerStateChanged", function (event) {
-		if (event.data.curtrack == true) {
-			// Track has changed
-			update();
-		} else if (event.data.playstate == true) {
-			// Playstate has changed
-			if (sp.trackPlayer.getIsPlaying())
-				play();
-			else
-				pause();
-		}
-	});
+		/**
+		 * Start the application.
+		 */
+		init: function() {
+			app.update();
 
-}
+			// Catch player changed events
+			sp.trackPlayer.addEventListener("playerStateChanged", function (event) {
+				if (event.data.curtrack == true) {
+					// Track has changed
+					app.update();
+				} else if (event.data.playstate == true) {
+					// Playstate has changed
+					if (sp.trackPlayer.getIsPlaying())
+						app.play();
+					else
+						app.pause();
+				}
+			});
 
-// Start the playback
-function play() {
-	if (imageStream !== null)
-		clearTimeout(imageStream);
-	playing = true;
-	nextImage();
-}
+		},
 
-// Pause the playback
-function pause() {
-	if (imageStream !== null)
-		clearTimeout(imageStream);
-	playing = false;
-}
+		// Go to thext next image
+		nextImage: function() {
+			app.flickr.next(function(image) {
+				var img = new Image();
 
-// Update the stream
-function update() {
+				// Load new image
+				app.currentImage = image.url.default;
 
-	// This will be null if nothing is playing.
-	var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack();
+				img.onload = function() {
+					var imageDiv = document.getElementById('image'),
+						divs = document.querySelectorAll('#image > div'),
+						newImage = document.createElement('div');
+					for (var i = 0; i < divs.length; i++) {
+						divs[i].remove();
+					}
 
-	if (playerTrackInfo == null) {
-		pause();
-		currentArtist = null;
-		currentImage = null;
-		document.getElementById('splash').style.display = 'block';
-		document.getElementById('image').style.display = 'none';
-	} else if (playerTrackInfo.track.artists[0].name != currentArtist) {
-		currentArtist = playerTrackInfo.track.artists[0].name;
-		flickr.setSearchTerm(currentArtist);
-		if (!imageStream && sp.trackPlayer.getIsPlaying()) {
-			play();
-		}
-		document.getElementById('splash').style.display = 'none';
-		document.getElementById('image').style.display = 'block';
-	}
+					// Create new image div
+					newImage.id = image.id;
+					newImage.innerHTML = '<img src="' + app.currentImage + '" alt="' + app.currentArtist + '"><a href="' + image.link + '">' + image.title + '</a>';
+					imageDiv.appendChild(newImage);
 
-}
+					// Position & show new image
+					newImage.style.top = Math.floor((imageDiv.scrollHeight - img.height) / 2) + 'px';
+					newImage.style.display = 'block';
 
-// Go to thext next image
-function nextImage() {
-	console.log('nextImage');
-	flickr.next(function(image) {
-		var img = new Image();
+					// Prepare next image
+					if (app.playing)
+						app.imageStream = setTimeout(function() {
+							app.nextImage();
+						}, app.intervalLength);
+				}
+				img.src = app.currentImage;
 
-		// Load new image
-		currentImage = image.url.default;
+			});
+		},
 
-		img.onload = function() {
-			var imageDiv = document.getElementById('image'),
-				divs = document.querySelectorAll('#image > div'),
-				newImage = document.createElement('div');
-			for (var i = 0; i < divs.length; i++) {
-				divs[i].remove();
+		// Start the playback
+		play: function() {
+			if (app.imageStream !== null)
+				clearTimeout(app.imageStream);
+			app.playing = true;
+			app.nextImage();
+		},
+
+		// Pause the playback
+		pause: function() {
+			if (app.imageStream !== null)
+				clearTimeout(app.imageStream);
+			app.playing = false;
+		},
+
+		// Update the stream
+		update: function() {
+
+			// This will be null if nothing is playing.
+			var playerTrackInfo = sp.trackPlayer.getNowPlayingTrack();
+
+			if (playerTrackInfo == null) {
+				app.pause();
+				app.currentArtist = null;
+				app.currentImage = null;
+				document.getElementById('splash').style.display = 'block';
+				document.getElementById('image').style.display = 'none';
+			} else if (playerTrackInfo.track.artists[0].name != app.currentArtist) {
+				app.currentArtist = playerTrackInfo.track.artists[0].name;
+				app.flickr.setSearchTerm(app.currentArtist);
+				if (!app.imageStream && sp.trackPlayer.getIsPlaying()) {
+					app.play();
+				}
+				document.getElementById('splash').style.display = 'none';
+				document.getElementById('image').style.display = 'block';
 			}
 
-			// Create new image div
-			newImage.id = image.id;
-			newImage.innerHTML = '<img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a>';
-			imageDiv.appendChild(newImage);
-
-			// Position & show new image
-			newImage.style.top = Math.floor((imageDiv.scrollHeight - img.height) / 2) + 'px';
-			newImage.style.display = 'block';
-
-			// Prepare next image
-			if (playing)
-				imageStream = setTimeout(function() {
-					nextImage();
-				}, intervalLength);
 		}
-		img.src = currentImage;
 
-	});
-}
+	};
+
+	window.onload = function() {
+		// Let's do this!
+		app.init();
+	}
 
 })();
