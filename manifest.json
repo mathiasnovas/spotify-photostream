@@ -5,7 +5,7 @@
         "128x128": "img/flickr_128.png"
     },
     "AppDescription": {
-        "en": "Fetches a continuous stream of pictures from flickr based on the currently playing artist."
+        "en": "Shows a continuous stream of pictures from flickr based on the currently playing artist."
     },
     "AppName": {
         "en": "flickrstream"
@@ -20,5 +20,5 @@
     "SupportedLanguages": [
         "en"
     ],
-    "VendorIdentifier": "com.thelonelycoder"
+    "VendorIdentifier": "git.michaelenger"
 }

@@ -26,7 +26,7 @@ Open up Spotify and in the search field enter **spotify:app:flickrstream**
 
 **spotify-flickrstream is licensed under the terms of the ZLIB license:**
 
-Copyright © 2011-2013 The Lonely Coder
+Copyright © 2011-2013 Michael Enger
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
