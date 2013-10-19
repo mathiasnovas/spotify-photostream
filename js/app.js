@@ -22,7 +22,7 @@ var sp = getSpotifyApi(1),
 	imageStream = null;
 
 // Onload
-$(function() {
+window.onload = function() {
 	update();
 
 	// Catch player changed events
@@ -39,7 +39,7 @@ $(function() {
 		}
 	});
 
-});
+}
 
 // Start the playback
 function play() {
@@ -66,55 +66,54 @@ function update() {
 		pause();
 		currentArtist = null;
 		currentImage = null;
-		$('#splash').show();
-		$('#image').hide();
+		document.getElementById('splash').style.display = 'block';
+		document.getElementById('image').style.display = 'none';
 	} else if (playerTrackInfo.track.artists[0].name != currentArtist) {
 		currentArtist = playerTrackInfo.track.artists[0].name;
 		flickr.setSearchTerm(currentArtist);
 		if (!imageStream && sp.trackPlayer.getIsPlaying()) {
 			play();
 		}
-		$('#splash').hide();
-		$('#image').show();
+		document.getElementById('splash').style.display = 'none';
+		document.getElementById('image').style.display = 'block';
 	}
 
 }
 
 // Go to thext next image
 function nextImage() {
+	console.log('nextImage');
 	flickr.next(function(image) {
 		var img = new Image();
 
 		// Load new image
 		currentImage = image.url.default;
-		$(img)
-			.load(function () {
 
-				// Remove existing images
-				$('#image > div').fadeToggle('slow', 'swing', function() {
-					$(this).remove();
-				});
+		img.onload = function() {
+			var imageDiv = document.getElementById('image'),
+				divs = document.querySelectorAll('#image > div'),
+				newImage = document.createElement('div');
+			for (var i = 0; i < divs.length; i++) {
+				divs[i].remove();
+			}
 
-				// Add our image
-				$('#image').append('<div id="' + image.id + '"><img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a></div>');
+			// Create new image div
+			newImage.id = image.id;
+			newImage.innerHTML = '<img src="' + currentImage + '" alt="' + currentArtist + '"><a href="' + image.link + '">' + image.title + '</a>';
+			imageDiv.appendChild(newImage);
 
-				// Position and show image
-				var imagediv = $('#image');
-				var innerdiv = $('#image #' + image.id);
-				innerdiv
-					.css('top', ((imagediv.height() - innerdiv.height()) / 2) + 'px')
-					.fadeToggle('slow');
+			// Position & show new image
+			newImage.style.top = Math.floor((imageDiv.scrollHeight - img.height) / 2) + 'px';
+			newImage.style.display = 'block';
 
-				// Prepare next image
-				if (playing)
-					imageStream = setTimeout(function() {
-						nextImage();
-					}, intervalLength);
-			})
-			.error(function () {
-      			console.error("Unable to load image");
-    		})
-    		.attr('src', currentImage);
+			// Prepare next image
+			if (playing)
+				imageStream = setTimeout(function() {
+					nextImage();
+				}, intervalLength);
+		}
+		img.src = currentImage;
+
 	});
 }
 
