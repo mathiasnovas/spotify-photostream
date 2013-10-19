@@ -67,10 +67,18 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 				img.onload = function() {
 					var imageDiv = document.getElementById('image'),
-						divs = document.querySelectorAll('#image > div'),
+						existingImages = document.querySelectorAll('#image > div'),
 						newImage = document.createElement('div');
-					for (var i = 0; i < divs.length; i++) {
-						divs[i].remove();
+
+					if (existingImages.length) {
+						for (var i = 0; i < existingImages.length; i++) {
+							existingImages[i].style.opacity = 0;
+						}
+						setTimeout(function() {
+							for (var i = 0; i < existingImages.length; i++) {
+								existingImages[i].remove();
+							}
+						}, 1000);
 					}
 
 					// Create new image div
@@ -80,7 +88,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 					// Position & show new image
 					newImage.style.top = Math.floor((imageDiv.scrollHeight - img.height) / 2) + 'px';
-					newImage.style.display = 'block';
+					newImage.style.opacity = 1;
 
 					// Prepare next image
 					if (app.playing)

@@ -13,8 +13,9 @@ body {
 }
 
 #image > div {
-	display: none;
+	opacity: 0;
 	position: absolute;
+	transition: opacity 1s;
 	width: 100%;
 }
 
