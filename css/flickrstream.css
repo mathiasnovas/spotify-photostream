@@ -6,6 +6,7 @@ body {
 }
 
 #image {
+	background: url('../img/loading.png') center center no-repeat;
 	position: absolute;
 	text-align: center;
 	height: 100%;
