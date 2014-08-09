@@ -111,7 +111,7 @@
 				app.pause();
 				app.currentArtist = null;
 				app.currentImage = null;
-				document.getElementById('splash').style.display = 'block';
+				document.getElementById('artist').innerHTML = 'Waiting for music...';
 				document.getElementById('image').style.display = 'none';
 			} else if (playerTrackInfo.track.artists[0].name != app.currentArtist) {
 				app.currentArtist = playerTrackInfo.track.artists[0].name;
@@ -119,7 +119,7 @@
 				if (!app.imageStream && sp.trackPlayer.getIsPlaying()) {
 					app.play();
 				}
-				document.getElementById('splash').style.display = 'none';
+				document.getElementById('artist').innerHTML = app.currentArtist;
 				document.getElementById('image').style.display = 'block';
 			}
 

@@ -5,6 +5,19 @@ body {
 	width: 100%;
 }
 
+#artist {
+	background: rgba(0,0,0,0.25);
+	bottom: 0;
+	color: white;
+	font-size: 1.7em;
+	font-weight: bold;
+	left: 0;
+	padding: 1em;
+	position: absolute;
+	right: 0;
+	text-align: center;
+}
+
 #image {
 	background: url('../img/loading.png') center center no-repeat;
 	position: absolute;
@@ -44,17 +57,3 @@ body {
 	top:30%;
 	width: 100%;
 }
-
-.powered-by {
-	bottom: 10px;
-	font-size: 0.65em;
-	position: absolute;
-	opacity: 0.4;
-	right: 10px;
-	text-align: center;
-	text-transform: uppercase;
-}
-
-	.powered-by img {
-		display: block;
-	}
