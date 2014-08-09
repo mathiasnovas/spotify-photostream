@@ -28,16 +28,13 @@ body {
 }
 
 #image > div {
+	background: none center center no-repeat;
+	background-size: cover;
+	height: 100%;
 	opacity: 0;
 	position: absolute;
 	transition: opacity 1s;
 	width: 100%;
-}
-
-#image img {
-	box-shadow: 0 10px 50px #000;
-	display: block;
-	margin: 0 auto 0.5em;
 }
 
 #splash {

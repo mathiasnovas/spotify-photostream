@@ -13,7 +13,6 @@
 
 		// Settings
 		intervalLength: 7000,
-		playing: false,
 
 		// Current objects
 		currentArtist: null,
@@ -31,12 +30,6 @@
 				if (event.data.curtrack == true) {
 					// Track has changed
 					app.update();
-				} else if (event.data.playstate == true) {
-					// Playstate has changed
-					if (sp.trackPlayer.getIsPlaying())
-						app.play();
-					else
-						app.pause();
 				}
 			});
 
@@ -68,37 +61,20 @@
 
 					// Create new image div
 					newImage.id = image.id;
-					newImage.innerHTML = '<img src="' + app.currentImage + '" alt="' + app.currentArtist + '">';
+					newImage.style.backgroundImage = 'url(\'' + app.currentImage + '\')';
 					imageDiv.appendChild(newImage);
 
-					// Position & show new image
-					newImage.style.top = Math.floor((imageDiv.scrollHeight - img.height) / 2) + 'px';
+					// Show new image
 					newImage.style.opacity = 1;
 
 					// Prepare next image
-					if (app.playing)
-						app.imageStream = setTimeout(function() {
-							app.nextImage();
-						}, app.intervalLength);
+					app.imageStream = setTimeout(function() {
+						app.nextImage();
+					}, app.intervalLength);
 				}
 				img.src = app.currentImage;
 
 			});
-		},
-
-		// Start the playback
-		play: function() {
-			if (app.imageStream !== null)
-				clearTimeout(app.imageStream);
-			app.playing = true;
-			app.nextImage();
-		},
-
-		// Pause the playback
-		pause: function() {
-			if (app.imageStream !== null)
-				clearTimeout(app.imageStream);
-			app.playing = false;
 		},
 
 		// Update the stream
@@ -116,8 +92,8 @@
 			} else if (playerTrackInfo.track.artists[0].name != app.currentArtist) {
 				app.currentArtist = playerTrackInfo.track.artists[0].name;
 				app.lastfm.setSearchTerm(app.currentArtist);
-				if (!app.imageStream && sp.trackPlayer.getIsPlaying()) {
-					app.play();
+				if (!app.imageStream) {
+					app.nextImage();
 				}
 				document.getElementById('artist').innerHTML = app.currentArtist;
 				document.getElementById('image').style.display = 'block';
