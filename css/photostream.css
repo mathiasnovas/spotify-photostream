@@ -35,7 +35,6 @@ body {
 }
 
 #image img {
-	border: 0.5em solid #fff;
 	box-shadow: 0 10px 50px #000;
 	display: block;
 	margin: 0 auto 0.5em;
