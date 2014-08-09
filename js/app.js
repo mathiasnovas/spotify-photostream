@@ -3,13 +3,13 @@
 
 	// Includes
 	var sp = getSpotifyApi(1),
-		flickrstream = sp.require('js/flickrstream');
+		lastfmstream = sp.require('js/lastfmstream');
 
 	// The app itself
 	var app = {
 
-		// FlickrStream
-		flickr: new flickrstream.FlickrStream('525b48b1850237c4010808f667523170'), // please don't abuse my API key >_>
+		// Last.fm stream
+		lastfm: new lastfmstream.LastFMStream('dd1d56c289c3bb533e1b4371fb99bd32'), // please don't abuse my API key ^^
 
 		// Settings
 		intervalLength: 7000,
@@ -44,11 +44,11 @@
 
 		// Go to thext next image
 		nextImage: function() {
-			app.flickr.next(function(image) {
+			app.lastfm.next(function(image) {
 				var img = new Image();
 
 				// Load new image
-				app.currentImage = image.url.default;
+				app.currentImage = image.url;
 
 				img.onload = function() {
 					var imageDiv = document.getElementById('image'),
@@ -68,7 +68,7 @@
 
 					// Create new image div
 					newImage.id = image.id;
-					newImage.innerHTML = '<img src="' + app.currentImage + '" alt="' + app.currentArtist + '"><a href="' + image.link + '">' + image.title + '</a>';
+					newImage.innerHTML = '<img src="' + app.currentImage + '" alt="' + app.currentArtist + '">';
 					imageDiv.appendChild(newImage);
 
 					// Position & show new image
@@ -115,7 +115,7 @@
 				document.getElementById('image').style.display = 'none';
 			} else if (playerTrackInfo.track.artists[0].name != app.currentArtist) {
 				app.currentArtist = playerTrackInfo.track.artists[0].name;
-				app.flickr.setSearchTerm(app.currentArtist);
+				app.lastfm.setSearchTerm(app.currentArtist);
 				if (!app.imageStream && sp.trackPlayer.getIsPlaying()) {
 					app.play();
 				}

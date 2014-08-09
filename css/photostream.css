@@ -20,6 +20,7 @@ body {
 
 #image {
 	background: url('../img/loading.png') center center no-repeat;
+	overflow: hidden;
 	position: absolute;
 	text-align: center;
 	height: 100%;
@@ -38,10 +39,6 @@ body {
 	box-shadow: 0 10px 50px #000;
 	display: block;
 	margin: 0 auto 0.5em;
-}
-
-#link a {
-	color: #333;
 }
 
 #splash {

@@ -15,7 +15,9 @@
     "RequiredInterface": 1,
     "RequiredPermissions": [
         "http://api.flickr.com",
-        "http://*.staticflickr.com"
+        "http://*.staticflickr.com",
+        "http://ws.audioscrobbler.com",
+        "http://userserve-ak.last.fm"
     ],
     "SupportedLanguages": [
         "en"
