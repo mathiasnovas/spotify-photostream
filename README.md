@@ -1,8 +1,8 @@
-# spotify-flickrstream
+# spotify-photostream
 
 Small Spotify app which fetches a continuous stream of images from flickr based on the artist you're currently listening to.
 
-![Screenshot](https://raw.github.com/michaelenger/spotify-flickrstream/master/img/screenshot.png)
+![Screenshot](https://raw.github.com/michaelenger/spotify-photostream/master/img/screenshot.png)
 
 ## Installation
 
@@ -14,19 +14,19 @@ Create a folder called "Spotify" in your home directory (if using Mac OSX) or in
 mkdir ~/Spotify && cd ~/Spotify
 ```
 
-Clone (or unzip) the app into said folder with the name "flickrstream"
+Clone (or unzip) the app into said folder with the name "photostream"
 
 ```
-git clone git@github.com:michaelenger/spotify-flickrstream.git flickrstream
+git clone git@github.com:michaelenger/spotify-photostream.git photostream
 ```
 
-Open up Spotify and in the search field enter **spotify:app:flickrstream**
+Open up Spotify and in the search field enter **spotify:app:photostream**
 
 ## License
 
-**spotify-flickrstream is licensed under the terms of the ZLIB license:**
+**spotify-photostream is licensed under the terms of the ZLIB license:**
 
-Copyright © 2011-2013 Michael Enger
+Copyright © 2011-2014 Michael Enger
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 

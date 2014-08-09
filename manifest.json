@@ -8,9 +8,9 @@
         "en": "Shows a continuous stream of pictures from flickr based on the currently playing artist."
     },
     "AppName": {
-        "en": "flickrstream"
+        "en": "photostream"
     },
-    "BundleIdentifier": "flickrstream",
+    "BundleIdentifier": "photostream",
     "BundleType": "Application",
     "RequiredInterface": 1,
     "RequiredPermissions": [
