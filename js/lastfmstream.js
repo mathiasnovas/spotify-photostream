@@ -4,33 +4,30 @@
 	/**
 	 * Constructor
 	 *
-	 * @param apiKey     API Key to flickr
+	 * @param apiKey     API Key to last.fm
 	 * @param searchTerm (optional) Search term to start the stream
 	 **/
-	var FlickrStream = function (apiKey, searchTerm) {
+	var LastFMStream = function (apiKey, searchTerm) {
 		// Options
 		this.options = {
-			// Flickr API key
+			// LastFM API key
 			apiKey: apiKey,
-
-			// Amount of images to get per page
-			perPage: 10,
 
 			// The search term
 			searchTerm: searchTerm
 		};
 
-		// The current page of photos
-		this.page = 0;
-
 		// List of images
 		this.images = [];
+
+		// Current image
+		this.currentImage = -1;
 
 		if (searchTerm)
 			this.setSearchTerm(searchTerm);
 	};
 
-	FlickrStream.prototype = {
+	LastFMStream.prototype = {
 
 		/**
 		 * Get the next image in the stream, incrementing the stream.
@@ -41,12 +38,13 @@
 			var self = this;
 
 			if (this.images.length !== 0) {
-				// Get the next images
+				// Get the next image
+				this.currentImage = this.currentImage == this.images.length - 1 ? 0 : this.currentImage + 1;
+
 				if (typeof callback != 'undefined')
-					callback( this.images.shift() );
+					callback(this.images[this.currentImage]);
 			} else {
 				// Get the next batch of images
-				this.page++;
 				this.search(function () {
 					if (callback)
 						self.next(callback);
@@ -58,7 +56,6 @@
 		 * Reset the stream.
 		 **/
 		resetStream: function () {
-			this.page = 0;
 			this.images = [];
 		},
 
@@ -69,7 +66,7 @@
 		 **/
 		search: function(callback) {
 			if (!this.options.searchTerm) {
-				console.error('FlickrStream::search: no search term defined');
+				console.error('LastFMStream::search: no search term defined');
 				if (callback)
 					callback();
 				return;
@@ -77,15 +74,13 @@
 
 			var self = this,
 				request = new XMLHttpRequest(),
-				url = 'http://api.flickr.com/services/rest/',
+				url = 'http://ws.audioscrobbler.com/2.0/',
 				params = {
 					api_key: this.options.apiKey,
 					format: 'json',
-					method: 'flickr.photos.search',
-					text: this.options.searchTerm,
-					per_page: this.options.perPage,
-					page: this.page,
-					sort: 'relevance'
+					method: 'artist.getinfo',
+					artist: this.options.searchTerm,
+					callback: 'jsonLastFMApi'
 				},
 				query = '';
 			for (var key in params) {
@@ -94,37 +89,28 @@
 
 
 			request.onreadystatechange = function () {
-				function jsonFlickrApi(json) {
+				function jsonLastFMApi(json) {
 					return json;
 				};
 
 				if (this.readyState == 4 && this.status == 200 ) {
-					var json = eval(this.responseText);
+					var json = eval(this.responseText),
+						artist = json.artist,
+						image = {};
 
-					// Loop around if we've reached the end
-					if (json.photos.photo.length === 0) {
-						self.resetStream();
-						self.search(callback);
-						return;
+					console.log('Fetched artist from Last.FM', artist);
+
+					image.title = artist.name;
+					image.id = artist.mbid;
+					image.link = artist.url;
+					image.url = '';
+
+					if (artist.image.length) {
+						var temp = artist.image.pop();
+						image.url = temp['#text'];
 					}
 
-					// Fill 'er up
-					for(var i in json.photos.photo) {
-						var entry = json.photos.photo[i];
-						var image = {
-							id: entry.id,
-							title: entry.title,
-							owner: entry.owner,
-							link: 'http://www.flickr.com/photos/' + entry.owner + '/' + entry.id,
-							url: {
-								'default': 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '.jpg',
-								thumbnail: 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '_t.jpg',
-								large: 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '_b.jpg',
-							}
-						}
-
-						self.images.push(image);
-					}
+					self.images = [image];
 
 					if (callback)
 						callback();
@@ -150,6 +136,6 @@
 	}
 
 	// Add it to the scope
-	exports.FlickrStream = FlickrStream;
+	exports.LastFMStream = LastFMStream;
 
 })();

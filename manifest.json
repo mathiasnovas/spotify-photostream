@@ -8,14 +8,16 @@
         "en": "Shows a continuous stream of pictures from flickr based on the currently playing artist."
     },
     "AppName": {
-        "en": "flickrstream"
+        "en": "photostream"
     },
-    "BundleIdentifier": "flickrstream",
+    "BundleIdentifier": "photostream",
     "BundleType": "Application",
     "RequiredInterface": 1,
     "RequiredPermissions": [
         "http://api.flickr.com",
-        "http://*.staticflickr.com"
+        "http://*.staticflickr.com",
+        "http://ws.audioscrobbler.com",
+        "http://userserve-ak.last.fm"
     ],
     "SupportedLanguages": [
         "en"
