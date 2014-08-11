@@ -42,7 +42,7 @@
 
 			if (this.images.length !== 0) {
 				// Get the next images
-				if (typeof callback != 'undefined')
+				if (typeof callback != "undefined")
 					callback( this.images.shift() );
 			} else {
 				// Get the next batch of images
@@ -69,7 +69,7 @@
 		 **/
 		search: function(callback) {
 			if (!this.options.searchTerm) {
-				console.error('FlickrStream::search: no search term defined');
+				console.error("FlickrStream::search: no search term defined");
 				if (callback)
 					callback();
 				return;
@@ -77,19 +77,19 @@
 
 			var self = this,
 				request = new XMLHttpRequest(),
-				url = 'http://api.flickr.com/services/rest/',
+				url = "http://api.flickr.com/services/rest/",
 				params = {
 					api_key: this.options.apiKey,
-					format: 'json',
-					method: 'flickr.photos.search',
+					format: "json",
+					method: "flickr.photos.search",
 					text: this.options.searchTerm,
 					per_page: this.options.perPage,
 					page: this.page,
-					sort: 'relevance'
+					sort: "relevance"
 				},
-				query = '';
+				query = "";
 			for (var key in params) {
-				query += (query != '' ? '&' : '?') + encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+				query += (query != "" ? "&" : "?") + encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
 			}
 
 
@@ -115,11 +115,11 @@
 							id: entry.id,
 							title: entry.title,
 							owner: entry.owner,
-							link: 'http://www.flickr.com/photos/' + entry.owner + '/' + entry.id,
+							link: "http://www.flickr.com/photos/" + entry.owner + "/" + entry.id,
 							url: {
-								'default': 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '.jpg',
-								thumbnail: 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '_t.jpg',
-								large: 'http://farm' + entry.farm + '.staticflickr.com/' + entry.server + '/' + entry.id + '_' + entry.secret + '_b.jpg',
+								"default": "http://farm" + entry.farm + ".staticflickr.com/" + entry.server + "/" + entry.id + "_" + entry.secret + ".jpg",
+								thumbnail: "http://farm" + entry.farm + ".staticflickr.com/" + entry.server + "/" + entry.id + "_" + entry.secret + "_t.jpg",
+								large: "http://farm" + entry.farm + ".staticflickr.com/" + entry.server + "/" + entry.id + "_" + entry.secret + "_b.jpg",
 							}
 						}
 
@@ -133,7 +133,7 @@
 			request.addEventListener("error", function() {
 				console.error(this.responseText);
 			}, false);
-			request.open('GET', url + query, true);
+			request.open("GET", url + query, true);
 			request.send();
 		},
 

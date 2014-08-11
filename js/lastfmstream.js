@@ -41,7 +41,7 @@
 				// Get the next image
 				this.currentImage = this.currentImage == this.images.length - 1 ? 0 : this.currentImage + 1;
 
-				if (typeof callback != 'undefined')
+				if (typeof callback != "undefined")
 					callback(this.images[this.currentImage]);
 			} else {
 				// Get the next batch of images
@@ -66,7 +66,7 @@
 		 **/
 		search: function(callback) {
 			if (!this.options.searchTerm) {
-				console.error('LastFMStream::search: no search term defined');
+				console.error("LastFMStream::search: no search term defined");
 				if (callback)
 					callback();
 				return;
@@ -74,17 +74,17 @@
 
 			var self = this,
 				request = new XMLHttpRequest(),
-				url = 'http://ws.audioscrobbler.com/2.0/',
+				url = "http://ws.audioscrobbler.com/2.0/",
 				params = {
 					api_key: this.options.apiKey,
-					format: 'json',
-					method: 'artist.getinfo',
+					format: "json",
+					method: "artist.getinfo",
 					artist: this.options.searchTerm,
-					callback: 'jsonLastFMApi'
+					callback: "jsonLastFMApi"
 				},
-				query = '';
+				query = "";
 			for (var key in params) {
-				query += (query != '' ? '&' : '?') + encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+				query += (query != "" ? "&" : "?") + encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
 			}
 
 
@@ -98,16 +98,16 @@
 						artist = json.artist,
 						image = {};
 
-					console.log('Fetched artist from Last.FM', artist);
+					console.log("Fetched artist from Last.FM", artist);
 
 					image.title = artist.name;
 					image.id = artist.mbid;
 					image.link = artist.url;
-					image.url = '';
+					image.url = "";
 
 					if (artist.image.length) {
 						var temp = artist.image.pop();
-						image.url = temp['#text'];
+						image.url = temp["#text"];
 					}
 
 					self.images = [image];
@@ -119,7 +119,7 @@
 			request.addEventListener("error", function() {
 				console.error(this.responseText);
 			}, false);
-			request.open('GET', url + query, true);
+			request.open("GET", url + query, true);
 			request.send();
 		},
 
