@@ -2,7 +2,7 @@
 	"use strict";
 
 	var sp = getSpotifyApi(1),
-		lastfmstream = sp.require("js/lastfmstream");
+		lastfmSource = sp.require("js/lastfm-source");
 
 	var app = {
 
@@ -12,7 +12,7 @@
 		intervalLength: 30000,
 		nextImageTimeout: undefined,
 		sources: {
-			lastfm: new lastfmstream.LastFMStream("dd1d56c289c3bb533e1b4371fb99bd32"), // please don't abuse my API key ^^
+			lastfm: new lastfmSource.LastFMSource("dd1d56c289c3bb533e1b4371fb99bd32"), // please don't abuse my API key ^^
 		},
 
 		/**
@@ -48,9 +48,8 @@
 		 * Load the images for the current artist.
 		 */
 		loadImages: function () {
-			this.sources.lastfm.setSearchTerm(this.currentArtist);
-			this.sources.lastfm.next(function (image) {
-				this.images.push(image);
+			this.sources.lastfm.search(this.currentArtist, function (images) {
+				this.images = images;
 				this.nextImage(); // @todo: only do this when all sources are done
 			}.bind(this));
 		},
