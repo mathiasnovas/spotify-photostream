@@ -34,6 +34,7 @@
 			return;
 		}
 
+		artist = artist.replace("&amp;", "");
 		query = this.getQuery(artist);
 		url = query.url;
 		params = query.params;
