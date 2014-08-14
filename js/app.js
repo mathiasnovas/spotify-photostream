@@ -84,6 +84,7 @@
 
 			if (!this.images.length) {
 				console.warn("No images to display");
+				this.removeImages();
 				return;
 			}
 
