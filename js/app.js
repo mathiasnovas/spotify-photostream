@@ -117,7 +117,7 @@
 		 * Remove existing images.
 		 */
 		removeImages: function () {
-			var existingImages = this.elements.images.querySelectorAll("#image > div");
+			var existingImages = this.elements.images.querySelectorAll("#image > .current");
 
 			if (existingImages.length) {
 				for (var i = 0; i < existingImages.length; i++) {
@@ -143,6 +143,7 @@
 
 			this.currentArtist = artist;
 			this.images = [];
+			this.removeImages();
 
 			if (artist != "") {
 				console.log("Update artist: " + artist);
