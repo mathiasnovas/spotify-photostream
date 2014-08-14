@@ -2,18 +2,21 @@
 	"use strict";
 
 	var sp = getSpotifyApi(1),
-		lastfmSource = sp.require("js/lastfm-source");
+		lastfmSource = sp.require("js/lastfm-source"),
+		echonestSource = sp.require("js/echonest-source");
 
 	var app = {
 
 		currentArtist: "",
 		elements: {},
 		images: [],
-		intervalLength: 30000,
+		intervalLength: 15000,
 		nextImageTimeout: undefined,
-		sources: {
-			lastfm: new lastfmSource.LastFMSource("dd1d56c289c3bb533e1b4371fb99bd32"), // please don't abuse my API key ^^
-		},
+		sources: [
+			// please don't abuse my API keys ^^
+			new lastfmSource.LastFMSource("dd1d56c289c3bb533e1b4371fb99bd32"),
+			new echonestSource.EchoNestSource("OU8TJJNV96BYN11BX")
+		],
 
 		/**
 		 * Get the currently playing track.
@@ -48,10 +51,21 @@
 		 * Load the images for the current artist.
 		 */
 		loadImages: function () {
-			this.sources.lastfm.search(this.currentArtist, function (images) {
-				this.images = images;
-				this.nextImage(); // @todo: only do this when all sources are done
-			}.bind(this));
+			var sources = this.sources.length,
+				receiveImages = function (images) {
+					if (images) {
+						this.images = this.images.concat(images);
+					}
+
+					if (--sources <= 0) {
+						this.nextImage();
+					}
+				},
+				i;
+
+				for (i = 0; i < sources; i++) {
+					this.sources[i].search(this.currentArtist, receiveImages.bind(this));
+				}
 		},
 
 		/**
