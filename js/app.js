@@ -2,8 +2,7 @@
 	"use strict";
 
 	var sp = getSpotifyApi(1),
-		lastfmSource = sp.require("js/lastfm-source"),
-		echonestSource = sp.require("js/echonest-source");
+		sources = sp.require("js/sources");
 
 	var app = {
 
@@ -14,8 +13,8 @@
 		nextImageTimeout: undefined,
 		sources: [
 			// please don't abuse my API keys ^^
-			new lastfmSource.LastFMSource("dd1d56c289c3bb533e1b4371fb99bd32"),
-			new echonestSource.EchoNestSource("OU8TJJNV96BYN11BX")
+			new sources.LastFMSource("dd1d56c289c3bb533e1b4371fb99bd32"),
+			new sources.EchoNestSource("OU8TJJNV96BYN11BX")
 		],
 
 		/**
