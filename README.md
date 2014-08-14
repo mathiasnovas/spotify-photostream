@@ -1,6 +1,6 @@
 # spotify-photostream
 
-Small Spotify app which fetches a continuous stream of images from flickr based on the artist you're currently listening to.
+Small Spotify app which fetches a continuous stream of images based on the artist you're currently listening to.
 
 ![Screenshot](https://raw.github.com/michaelenger/spotify-photostream/master/img/screenshot.png)
 
