@@ -10,7 +10,6 @@ body {
 	bottom: 0;
 	color: white;
 	font-size: 1.7em;
-	font-weight: bold;
 	left: 0;
 	padding: 1em;
 	position: absolute;
@@ -30,14 +29,31 @@ body {
 #image > div {
 	background: none center center no-repeat;
 	background-size: cover;
-	height: 100%;
-	opacity: 0;
+	height: 400px;
 	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	opacity: 0;
 	transition: opacity 1s;
+	top: 50%;
+	width: 400px;
+	margin-top: -200px;
+	z-index: 0;
+}
+
+#image .background-image {
+	-webkit-filter: blur(30px);
+	opacity: .3;
+	height: 100%;
+	margin: 0;
+	top: 0;
 	width: 100%;
 }
 
 #image > div.current {
+	box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+	border: 2px solid rgba(0, 0, 0, .2);
 	opacity: 1;
 }
 

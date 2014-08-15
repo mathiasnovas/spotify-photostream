@@ -93,11 +93,20 @@
 			image = new Image();
 
 			image.onload = function() {
-				var imageContainer = document.createElement("div");
+				var imageContainer = document.createElement("div"),
+					imageBackgroundContainer = document.createElement("div");
+
+				imageContainer.className = 'main-image';
+				imageBackgroundContainer.className = 'background-image';
 
 				this.removeImages();
 
 				imageContainer.id = currentImage.id;
+				imageBackgroundContainer.id = currentImage.id;
+
+				imageBackgroundContainer.style.backgroundImage = "url('" + currentImage.url + "')"
+				this.elements.images.appendChild(imageBackgroundContainer);
+
 				imageContainer.style.backgroundImage = "url('" + currentImage.url + "')"
 				this.elements.images.appendChild(imageContainer);
 
@@ -117,7 +126,7 @@
 		 * Remove existing images.
 		 */
 		removeImages: function () {
-			var existingImages = this.elements.images.querySelectorAll("#image > .current");
+			var existingImages = this.elements.images.querySelectorAll("#image > div");
 
 			if (existingImages.length) {
 				for (var i = 0; i < existingImages.length; i++) {
